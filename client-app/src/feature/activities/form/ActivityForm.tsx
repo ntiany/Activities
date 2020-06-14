@@ -1,4 +1,4 @@
-﻿import React, {useState, ChangeEvent, FormEvent} from 'react'
+﻿import React, {useState, FormEvent} from 'react'
 import { Button, Segment, Form } from 'semantic-ui-react';
 import { IActivity } from "../../../app/models/activity";
 import { v4 as uuid } from 'uuid';
