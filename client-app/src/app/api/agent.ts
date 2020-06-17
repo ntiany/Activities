@@ -1,6 +1,7 @@
 ﻿import axios, { AxiosResponse } from 'axios'
 import { IActivity } from "../models/activity";
 import { history } from '../..';
+import { toast } from 'react-toastify';
 
 
 axios.defaults.baseURL = 'http://localhost:59409/api/';
@@ -13,6 +14,9 @@ axios.interceptors.response.use(undefined,
         }
         if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
             history.push('/notfound');
+        }
+        if (status === 500) {
+            toast.error("Server error - check console for more info");
         }
     });
 
