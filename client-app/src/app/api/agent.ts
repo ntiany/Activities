@@ -9,6 +9,9 @@ axios.defaults.baseURL = 'http://localhost:59409/api/';
 axios.interceptors.response.use(undefined,
     error => {
         const { status, data, config } = error.response;
+        if (!error.response) {
+            toast.error("Server currently unavailable");
+        }
         if (status === 404) {
             history.push('/notfound');
         }
