@@ -1,4 +1,4 @@
-﻿import React, { Fragment } from 'react'
+﻿import React from 'react'
 import { Segment, Grid, Icon } from 'semantic-ui-react';
 import { IActivity } from "../../../app/models/activity";
 
