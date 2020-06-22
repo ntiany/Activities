@@ -10,6 +10,7 @@ import TextInput from '../../../app/common/form/TextInput';
 import TextAreaComp from '../../../app/common/form/TextAreaComp';
 import SelectInput from '../../../app/common/form/SelectInput';
 import { category } from '../../../app/common/options/categoryOptions';
+import DateInput from '../../../app/common/form/DateInput';
 
 
 interface DetailParams {
@@ -33,7 +34,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
         title: '',
         category: '',
         description: '',
-        date: '',
+        date: null,
         city: '',
         venue: ''
     });
@@ -65,7 +66,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
                                 <Field name="title" placeholder="Title" value={activity.title} component={TextInput}/>
                                 <Field name="description" rows={4} placeholder="Description" value={activity.description} component={TextAreaComp}/>
                                 <Field name="category" placeholder="Category" value={activity.category} options={category} component={SelectInput}/>
-                                <Field name="date" placeholder="Date" value={activity.date} component={TextInput} />
+                                <Field name="date" placeholder="Date" value={activity.date!} component={DateInput} />
                                 <Field name="city" placeholder="City" value={activity.city} component={TextInput} />
                                 <Field name="venue" placeholder="Venue" value={activity.venue} component={TextInput}/>
                                 <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
