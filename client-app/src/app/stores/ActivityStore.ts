@@ -2,6 +2,7 @@
 import { createContext, SyntheticEvent } from 'react';
 import { IActivity } from "../models/activity";
 import agent from '../api/agent';
+import { history } from '../..'
 
 configure({ enforceActions: 'always' });
 
@@ -64,6 +65,7 @@ class ActivityStore {
                 runInAction(() => {
                     activity.date = new Date(activity.date);
                     this.activity = activity;
+                    this.activityRegistry.set(activity.id, activity);
                 });
                 return activity;
             } catch (error) {
@@ -88,6 +90,7 @@ class ActivityStore {
             runInAction(() => {
                 this.activityRegistry.set(activity.id, activity);
             });
+            history.push(`/activities/${activity.id}`);
         } catch (error) { 
             console.log(error);
         } finally {
@@ -105,6 +108,7 @@ class ActivityStore {
                 this.activityRegistry.set(activity.id, activity);
                 this.activity = activity;
             });
+            history.push(`/activities/${activity.id}`);
         } catch (error) {
             console.log(error);
         } finally {

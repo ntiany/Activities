@@ -1,6 +1,6 @@
 ﻿import React, {useState, FormEvent, useContext, useEffect} from 'react'
 import { Button, Segment, Form, Grid, TextArea } from 'semantic-ui-react';
-import { IActivityFormValues, ActivityFormValues } from "../../../app/models/activity";
+import { IActivityFormValues, ActivityFormValues, IActivity } from "../../../app/models/activity";
 import { v4 as uuid } from 'uuid';
 import ActivityStore from '../../../app/stores/ActivityStore';
 import { observer } from "mobx-react-lite";
@@ -46,7 +46,17 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
         const dateAndTime = combinedDateAndTime(values.date, values.time);
         const { date, time, ...activity } = values;
         activity.date = dateAndTime;
+        if (!activity.id) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            };
+            createActivity(newActivity);
+        } else {
+            editActivity(activity);
+        }
     }
+
     return (
         <Grid>
             <Grid.Column width={10}>
@@ -66,7 +76,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
                                 <Field name="city" placeholder="City" value={activity.city} component={TextInput} />
                                 <Field name="venue" placeholder="Venue" value={activity.venue} component={TextInput}/>
                                 <Button disabled={loading} loading={submitting} floated="right" positive type="submit" content="Submit" />
-                                <Button disabled={loading} onClick={() => history.push('/activities')} floated="right" type="button" content="Cancel" />
+                                <Button disabled={loading} onClick={activity.id ? () => history.push(`/activities/${activity.id}`) : () => history.push('/activities')} floated="right" type="button" content="Cancel" />
                             </Form>
                         )}>
                     </FinalForm>
