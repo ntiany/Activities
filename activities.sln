@@ -32,6 +32,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "client-app", "client-app\",
 		SlnRelativePath = "client-app\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,18 @@ Global
 		{D4E134A8-4C6F-4CE8-BF5D-14FD271D41C9}.Release|x64.Build.0 = Debug|Any CPU
 		{D4E134A8-4C6F-4CE8-BF5D-14FD271D41C9}.Release|x86.ActiveCfg = Debug|Any CPU
 		{D4E134A8-4C6F-4CE8-BF5D-14FD271D41C9}.Release|x86.Build.0 = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Debug|x64.Build.0 = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Debug|x86.Build.0 = Debug|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Release|x64.ActiveCfg = Release|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Release|x64.Build.0 = Release|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Release|x86.ActiveCfg = Release|Any CPU
+		{7DA25310-EF32-4E9D-9EEF-41B55E4EEC25}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
