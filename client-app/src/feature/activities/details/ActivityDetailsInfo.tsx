@@ -22,7 +22,7 @@ const ActivityDetailsInfo: React.FC<{ activity: IActivity }> = ({ activity }) =>
                         </Grid.Column>
                         <Grid.Column width={15}>
                             <span>
-                                {format(activity.date!, 'eeee do mmmm')} at {format(activity.date!, 'h:mm a')}
+                                {format(activity.date, 'eeee do mmmm')} at {format(activity.date, 'h:mm a')}
                             </span>
                         </Grid.Column>
                     </Grid>
