@@ -1,6 +1,6 @@
 ﻿import React, {useState, FormEvent, useContext, useEffect} from 'react'
 import { Button, Segment, Form, Grid, TextArea } from 'semantic-ui-react';
-import { IActivityFormValues } from "../../../app/models/activity";
+import { IActivityFormValues, ActivityFormValues } from "../../../app/models/activity";
 import { v4 as uuid } from 'uuid';
 import ActivityStore from '../../../app/stores/ActivityStore';
 import { observer } from "mobx-react-lite";
@@ -11,6 +11,7 @@ import TextAreaComp from '../../../app/common/form/TextAreaComp';
 import SelectInput from '../../../app/common/form/SelectInput';
 import { category } from '../../../app/common/options/categoryOptions';
 import DateInput from '../../../app/common/form/DateInput';
+import { combinedDateAndTime } from '../../../app/common/util/util';
 
 
 interface DetailParams {
@@ -29,41 +30,32 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
     }
     = activityStore;
 
-    const [activity, setActivity] = useState<IActivityFormValues>({
-        id: undefined,
-        title: '',  
-        category: '',
-        description: '',
-        date: undefined,
-        city: '',
-        venue: '',
-        time: undefined
-    });
+    const [activity, setActivity] = useState(new ActivityFormValues);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-            if (match.params.id && activity.id) {
-                loadActivity(match.params.id).then(() => initialFormState && setActivity(initialFormState!)
-                );
-            }
-
-            return () => {
-                clearActivity();
+        if (match.params.id) {
+            setLoading(true);
+                loadActivity(match.params.id).then((activity) => setActivity(new ActivityFormValues(activity))
+                ).finally(() => setLoading(false));
             }
         },
-        [loadActivity, match.params.id, clearActivity, initialFormState, activity.id]);
+        [loadActivity, match.params.id]);
 
     const handleFinalFormSubmit = (values: any) => {
-
+        const dateAndTime = combinedDateAndTime(values.date, values.time);
+        const { date, time, ...activity } = values;
+        activity.date = dateAndTime;
     }
-
     return (
         <Grid>
             <Grid.Column width={10}>
                 <Segment clearing>
                     <FinalForm
+                        initialValues={activity}
                         onSubmit={handleFinalFormSubmit}
                         render={({ handleSubmit }) => (
-                            <Form onSubmit={handleSubmit}>
+                            <Form onSubmit={handleSubmit} loading={loading}>
                                 <Field name="title" placeholder="Title" value={activity.title} component={TextInput}/>
                                 <Field name="description" rows={4} placeholder="Description" value={activity.description} component={TextAreaComp}/>
                                 <Field name="category" placeholder="Category" value={activity.category} options={category} component={SelectInput}/>
@@ -73,8 +65,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
                                 </Form.Group>
                                 <Field name="city" placeholder="City" value={activity.city} component={TextInput} />
                                 <Field name="venue" placeholder="Venue" value={activity.venue} component={TextInput}/>
-                                <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
-                                <Button onClick={() => history.push('/activities')} floated="right" type="button" content="Cancel" />
+                                <Button disabled={loading} loading={submitting} floated="right" positive type="submit" content="Submit" />
+                                <Button disabled={loading} onClick={() => history.push('/activities')} floated="right" type="button" content="Cancel" />
                             </Form>
                         )}>
                     </FinalForm>
@@ -84,4 +76,4 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
 );
 };
 
-export default observer(ActivityForm);
+export default observer(ActivityForm); 

@@ -56,6 +56,7 @@ class ActivityStore {
         let activity = this.getActivity(id);
         if (activity) {
             this.activity = activity;
+            return activity;
         } else {
             this.loadingInitial = true;
             try {
@@ -64,6 +65,7 @@ class ActivityStore {
                     activity.date = new Date(activity.date);
                     this.activity = activity;
                 });
+                return activity;
             } catch (error) {
                 console.log(error);
             } finally {
