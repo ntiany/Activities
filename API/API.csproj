@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.4" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
@@ -13,7 +14,7 @@
 	</ItemGroup>
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 	</PropertyGroup>
 
 
