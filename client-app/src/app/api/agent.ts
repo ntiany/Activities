@@ -6,7 +6,7 @@ import { IUser, IUserFormValues } from "../models/user";
 
 
 
-axios.defaults.baseURL = 'http://localhost:59409/api/';
+axios.defaults.baseURL = 'https://localhost:44390/api/';
 
 axios.interceptors.response.use(undefined,
     error => {
