@@ -34,7 +34,7 @@ export default class UserStore {
             this.rootStore.modalStore.closeModal();
             history.push('/activities');
         } catch (error) {
-            error.log(error);
+            throw error;
         }
     }
 
