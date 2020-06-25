@@ -23,7 +23,7 @@ axios.interceptors.response.use(undefined,
         if (status === 500) {
             toast.error("Server error - check console for more info");
         }
-        throw error;
+        throw error.response;
     });
 
 const responseBody = (response: AxiosResponse) => response.data;
