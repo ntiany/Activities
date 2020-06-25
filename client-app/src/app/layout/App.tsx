@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import './styles.css';
 import NavBar from '../../feature/nav/NavBar';
 import ActivityDashboard from '../../feature/activities/dashboard/ActivityDashboard';
@@ -11,10 +11,25 @@ import ActivityDetails from '../../feature/activities/details/ActivityDetails';
 import NotFound from './NotFound';
 import { ToastContainer } from 'react-toastify'
 import LoginForm from '../../feature/user/LoginForm';
+import { RootStoreContext } from '../stores/rootStore';
+import LoadingComponent from './LoadingComponent';
 
 
 const App: React.FC<RouteComponentProps> = ({location}) => {
+    const rootStore = useContext(RootStoreContext);
+    const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
+    const { getUser } = rootStore.userStore;
 
+    useEffect(() => {
+            if (token) {
+                getUser().finally(() => setAppLoaded());
+            } else {
+                setAppLoaded();
+            }
+        },
+        [getUser, setAppLoaded, token]);
+
+    if (!appLoaded) return <LoadingComponent content='Loading activities...'/>;
 
     return (
         <Fragment>
