@@ -19,9 +19,16 @@ export default class UserStore {
             const user = await agent.User.login(values);
             runInAction(() => this.user = user
             );
+            this.rootStore.commonStore.token = user.token;
             history.push('/activities');
         } catch (error) {
            throw error;
         }
+    }
+
+    @action logout = () => {
+        this.rootStore.commonStore.setToken(null);
+        this.user = null;
+        history.push('/');
     }
 }
