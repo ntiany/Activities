@@ -19,6 +19,7 @@ using AutoMapper;
 using Persistence;
 using MediatR;
 using Domain;
+using Infrastructure.Photos;
 
 namespace API
 {
@@ -88,6 +89,7 @@ namespace API
                 });
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
         }
 
 
