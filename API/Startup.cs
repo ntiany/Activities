@@ -35,7 +35,10 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(opt =>
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                opt.UseLazyLoadingProxies();
+                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy",
