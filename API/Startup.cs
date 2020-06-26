@@ -15,6 +15,7 @@ using FluentValidation.AspNetCore;
 
 using Infrastructure.Security;
 using API.Middleware;
+using AutoMapper;
 using Persistence;
 using MediatR;
 using Domain;
@@ -54,6 +55,7 @@ namespace API
                 cfg.RegisterValidatorsFromAssemblyContaining<Create>();
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddAutoMapper(typeof(List.Handler));
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
