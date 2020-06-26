@@ -1,12 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interface;
-using Application.User;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +11,7 @@ using Persistence;
 
 namespace Application.Activities
 {
-    public class Attend
+    public class Unattend
     {
         public class Command : IRequest
         {
@@ -38,8 +35,8 @@ namespace Application.Activities
 
                     if (activity == null)
                     {
-                        throw new RestException(HttpStatusCode.NotFound, 
-                            new {Activity = "Could not find activity"});
+                        throw new RestException(HttpStatusCode.NotFound,
+                            new { Activity = "Could not find activity" });
                     }
 
                     var user = await _context.Users.SingleOrDefaultAsync(
@@ -48,21 +45,18 @@ namespace Application.Activities
                     var attendance = await _context.UserActivity.SingleOrDefaultAsync(
                         x => x.ActivityId == activity.Id && x.AppUserId == user.Id);
 
-                    if (attendance != null)
+                    if (attendance == null)
                     {
-                        throw new RestException(HttpStatusCode.BadRequest,
-                            new { Attendence = "Already attenting this activity" });
+                       return Unit.Value;
                     }
 
-                    attendance = new UserActivity
+                    if (attendance.IsHost)
                     {
-                        Activity = activity,
-                        AppUser = user,
-                        IsHost = false,
-                        DateJoined = DateTime.Now
-                    };
+                        throw new RestException(HttpStatusCode.BadRequest,
+                            new {Attendance = "The host cannot remove their attendance"});
+                    }
 
-                    _context.UserActivity.Add(attendance);
+                    _context.UserActivity.Remove(attendance);
 
                     var success = await _context.SaveChangesAsync(token) > 0;
 
