@@ -1,6 +1,7 @@
 ﻿import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Grid, Tab } from 'semantic-ui-react';
+import ProfilePhotos from './ProfilePhotos';
 
 const panes = [
     {
@@ -13,9 +14,7 @@ const panes = [
     {
     menuItem: 'Photos',
         render: () => 
-        <Tab.Pane>
-            About content
-        </Tab.Pane>
+            <ProfilePhotos />
     },
     {
         menuItem: 'Activities',
