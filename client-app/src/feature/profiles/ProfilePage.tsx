@@ -1,6 +1,6 @@
 ﻿import React, { useContext, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Grid } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
 import { RootStoreContext } from '../../app/stores/rootStore';
