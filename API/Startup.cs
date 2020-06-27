@@ -21,6 +21,7 @@ using MediatR;
 using Domain;
 using Infrastructure.Photos;
 
+
 namespace API
 {
     public class Startup
@@ -89,7 +90,7 @@ namespace API
                 });
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
-            services.AddScoped<IPhotoAccessor, IPhotoAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
         }
 
