@@ -26,7 +26,7 @@ namespace Infrastructure.Photos
         public PhotoUploadResult AddPhoto(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
-
+             
             if (file.Length > 0)
             {
                 using (var stream = file.OpenReadStream())
@@ -37,6 +37,11 @@ namespace Infrastructure.Photos
                     };
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
+            }
+
+            if (uploadResult.Error != null)
+            {
+                throw new Exception(uploadResult.Error.Message);
             }
 
             return new PhotoUploadResult
