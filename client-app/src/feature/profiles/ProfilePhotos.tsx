@@ -2,12 +2,17 @@
 import { Tab, Header, Card, Image, Button, Grid } from 'semantic-ui-react'
 import { RootStoreContext } from '../../app/stores/rootStore';
 import PhotoUploadWidget from '../../app/common/photoUpload/photoUploadWidget';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react-lite';
 
 const ProfilePhotos = () => {
     const rootStore = useContext(RootStoreContext);
-    const { profile, isCurrentUser } = rootStore.profileStore;
-    const [addPhotoMode, setAddPhotoMode] = useState(true);
+    const { profile, isCurrentUser, photoUploading, uploadPhoto, setMain, photoLoading } = rootStore.profileStore;
+    const [addPhotoMode, setAddPhotoMode] = useState(false);
 
+    const handleUploadImage = (photo: Blob) => {
+        uploadPhoto(photo).then(() => setAddPhotoMode(false));
+    }
 
     return (
         <Tab.Pane>
@@ -20,14 +25,14 @@ const ProfilePhotos = () => {
                 <Grid.Column width={16}>
                     {addPhotoMode
                         ?
-                        (<PhotoUploadWidget/>)
+                        (<PhotoUploadWidget uploadPhoto={handleUploadImage} loading={photoUploading}/>)
                         :
                         (<Card.Group itemsPerRow={5}>
                              {profile && profile.photos.map((photo) => (
                                 <Card key={photo.id}>
                                     <Image src={photo.url} />
                                      {isCurrentUser && <Button.Group fluid widths={2}>
-                                         <Button positive content="Main" />
+                                         <Button positive content="Main" onClick={() => setMain(photo)} loading={photoLoading}/>
                                          <Button negative icon="trash" />
                                          </Button.Group>}
                                 </Card>
@@ -40,4 +45,4 @@ const ProfilePhotos = () => {
     );
 }
 
-export default ProfilePhotos
+export default observer(ProfilePhotos)

@@ -1,5 +1,5 @@
 ﻿import { RootStore } from "./rootStore";
-import { IProfile } from "../models/profile";
+import { IProfile, IPhoto } from "../models/profile";
 import { observable, action, runInAction, computed } from "mobx";
 import agent from "../api/agent";
 
@@ -12,6 +12,7 @@ export default class ProfileStore {
     @observable profile: IProfile | null = null;
     @observable profileLoading = true;
     @observable photoUploading = false;
+    @observable photoLoading = false;
 
     @computed
     get isCurrentUser() {
@@ -59,6 +60,25 @@ export default class ProfileStore {
                     this.photoUploading = false;
                 }
             );
+        }
+    }
+
+    @action setMain = async (photo: IPhoto) => {
+        this.photoLoading = true;
+        try {
+            await agent.Profiles.setMain(photo.id);
+            runInAction(() => {
+                this.rootStore.userStore.user!.image = photo.url;
+                this.profile!.photos.find(x => x.isMain)!.isMain = false;
+                this.profile!.photos.find(x => x.id === photo.id)!.isMain = true;
+                this.profile!.image = photo.url;
+                this.photoLoading = false;
+            });
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.photoLoading = false;
+            });
         }
     }
 }
