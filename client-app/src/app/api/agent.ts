@@ -74,7 +74,8 @@ const Profiles = {
     get: (username: string): Promise<IProfile> => requests.get(`/profile/${username}`),
     uploadPhoto: (photo: Blob): Promise<IPhoto> => requests.postForm('/photos', photo),
     setMain: (id: string) => requests.post(`/photos/${id}`, {}),
-    deletePhoto: (id: string) => requests.del(`photos/${id}`)
+    deletePhoto: (id: string) => requests.del(`photos/${id}`),
+    updateProfile: (profile: Partial<IProfile>) => requests.put(`/profile`, profile) 
 }
 
 export default {
