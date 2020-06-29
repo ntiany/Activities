@@ -2,14 +2,14 @@
 import { Tab, Header, Card, Image, Button, Grid } from 'semantic-ui-react'
 import { RootStoreContext } from '../../app/stores/rootStore';
 import PhotoUploadWidget from '../../app/common/photoUpload/photoUploadWidget';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 const ProfilePhotos = () => {
     const rootStore = useContext(RootStoreContext);
-    const { profile, isCurrentUser, photoUploading, uploadPhoto, setMain, photoLoading } = rootStore.profileStore;
+    const { profile, isCurrentUser, photoUploading, uploadPhoto, setMain, photoLoading, deletePhoto } = rootStore.profileStore;
     const [addPhotoMode, setAddPhotoMode] = useState(false);
     const [target, setTarget] = useState<string | undefined>(undefined);
+    const [deleteTarget, setDeleteTarget] = useState<string | undefined>(undefined);
 
     const handleUploadImage = (photo: Blob) => {
         uploadPhoto(photo).then(() => setAddPhotoMode(false));
@@ -38,8 +38,13 @@ const ProfilePhotos = () => {
                                              setTarget(event.currentTarget.name);
                                          }}
                                              loading={photoLoading && target === photo.id}
-                                         disabled={photo.isMain}/>
-                                         <Button negative icon="trash" />
+                                             disabled={photo.isMain} />
+
+                                         <Button negative icon="trash" name={photo.id} disabled={photo.isMain} onClick={(event) => {
+                                             setDeleteTarget(event.currentTarget.name);
+                                             deletePhoto(photo);
+                                         }} loading={photoLoading && deleteTarget === photo.id}
+                                         />
                                          </Button.Group>}
                                 </Card>
                             ))}

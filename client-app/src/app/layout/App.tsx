@@ -10,7 +10,6 @@ import ActivityForm from '../../feature/activities/form/ActivityForm';
 import ActivityDetails from '../../feature/activities/details/ActivityDetails';
 import NotFound from './NotFound';
 import { ToastContainer } from 'react-toastify'
-import LoginForm from '../../feature/user/LoginForm';
 import { RootStoreContext } from '../stores/rootStore';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
