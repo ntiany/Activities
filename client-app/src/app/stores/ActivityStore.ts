@@ -40,20 +40,24 @@ export default class ActivityStore {
     }
 
     @action createHubConnection = () => {
-        this.hubConnection = new HubConnectionBuilder().withUrl('https://localhost:44390/chat/',
-                {
-                    accessTokenFactory: () => this.rootStore.commonStore.token!
-                }).configureLogging(LogLevel.Information)
+        this.hubConnection = new HubConnectionBuilder()
+            .withUrl('https://localhost:44390/chat', {
+                accessTokenFactory: () => this.rootStore.commonStore.token!
+            })
+            .configureLogging(LogLevel.Information)
             .build();
 
-        this.hubConnection.start().then(() => console.log(this.hubConnection!.state)).catch(error =>
-            console.log("Error establishing connection: ", error));
+        this.hubConnection
+            .start()
+            .then(() => console.log(this.hubConnection!.state))
+            .catch(error => console.log('Error establishing connection: ', error));
 
-        this.hubConnection.on("ReceiveComment",
-            comment => {
+        this.hubConnection.on('ReceiveComment', comment => {
+            runInAction(() => {
                 this.activity!.comments.push(comment);
-            });
-    }
+            })
+        })
+    };
 
     @action stopHubConnection = () => {
         this.hubConnection!.stop();
@@ -62,11 +66,11 @@ export default class ActivityStore {
     @action addComment = async (values: any) => {
         values.activityId = this.activity!.id;
         try {
-            await this.hubConnection!.invoke("SendComment", values);
+            await this.hubConnection!.invoke('SendComment', values)
         } catch (error) {
             console.log(error);
         }
-    }
+    } 
 
     @action clearActivity = () => {
         this.activity = null;
