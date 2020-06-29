@@ -135,6 +135,7 @@ export default class ActivityStore {
             attendees.push(attendee);
             activity.attendees = attendees;
             activity.isHost = true;
+            activity.comments = [];
             runInAction(() => {
                 this.activityRegistry.set(activity.id, activity);
             });
