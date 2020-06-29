@@ -11,6 +11,7 @@ export default class ProfileStore {
 
     @observable profile: IProfile | null = null;
     @observable profileLoading = true;
+    @observable photoUploading = false;
 
     @computed
     get isCurrentUser() {
@@ -34,6 +35,30 @@ export default class ProfileStore {
                 this.profileLoading = false;
             });
             console.log(error);
+        }
+    }
+
+    @action uploadPhoto = async (file: Blob) => {
+        this.photoUploading = true;
+        try {
+            const photo = await agent.Profiles.uploadPhoto(file);
+            runInAction(() => {
+                    if (this.profile) {
+                        this.profile.photos.push(photo);
+                        if (photo.isMain && this.rootStore.userStore.user) {
+                            this.rootStore.userStore.user!.image = photo.url;
+                            this.profile.image = photo.url;
+                        }
+                    }
+                    this.photoUploading = false;
+                }
+            );
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                    this.photoUploading = false;
+                }
+            );
         }
     }
 }
