@@ -1,18 +1,33 @@
 ﻿import { RootStore } from "./rootStore";
 import { IProfile, IPhoto } from "../models/profile";
-import { observable, action, runInAction, computed } from "mobx";
+import { observable, action, runInAction, computed, reaction } from "mobx";
 import agent from "../api/agent";
 
 export default class ProfileStore {
     rootStore: RootStore;
+
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
+
+        reaction(
+            () => this.activeTab,
+            activeTab => {
+                if (activeTab === 3 || activeTab === 4) {
+                    const predicate = activeTab === 3 ? 'followers' : 'following';
+                    this.loadFollowings(predicate);
+                } else {
+                    this.followings = [];
+                }
+            }
+        )
     }
 
     @observable profile: IProfile | null = null;
     @observable profileLoading = true;
     @observable photoUploading = false;
     @observable photoLoading = false;
+    @observable followings: IProfile[] = [];
+    @observable activeTab: number = 0;
 
     @computed
     get isCurrentUser() {
@@ -23,7 +38,12 @@ export default class ProfileStore {
         }
     }
 
-    @action loadProfile = async (username: string) => {
+    @action setActiveTab = (activeIndex: number) => {
+        this.activeTab = activeIndex;
+    } 
+
+    @action
+    loadProfile = async (username: string) => {
         this.profileLoading = true;
         try {
             const profile = await agent.Profiles.get(username);
@@ -39,7 +59,8 @@ export default class ProfileStore {
         }
     }
 
-    @action uploadPhoto = async (file: Blob) => {
+    @action
+    uploadPhoto = async (file: Blob) => {
         this.photoUploading = true;
         try {
             const photo = await agent.Profiles.uploadPhoto(file);
@@ -63,7 +84,8 @@ export default class ProfileStore {
         }
     }
 
-    @action setMain = async (photo: IPhoto) => {
+    @action
+    setMain = async (photo: IPhoto) => {
         this.photoLoading = true;
         try {
             await agent.Profiles.setMain(photo.id);
@@ -82,7 +104,8 @@ export default class ProfileStore {
         }
     }
 
-    @action deletePhoto = async (photo: IPhoto) => {
+    @action
+    deletePhoto = async (photo: IPhoto) => {
         this.photoLoading = true;
         try {
             await agent.Profiles.deletePhoto(photo.id);
@@ -98,7 +121,8 @@ export default class ProfileStore {
         }
     }
 
-    @action updateProfile = async (profile: Partial<IProfile>) => {
+    @action
+    updateProfile = async (profile: Partial<IProfile>) => {
         try {
             await agent.Profiles.updateProfile(profile);
             runInAction(() => {
@@ -112,8 +136,9 @@ export default class ProfileStore {
         }
     }
 
-    @action follow = async (username: string) => {
-        this.photoLoading = true; 
+    @action
+    follow = async (username: string) => {
+        this.photoLoading = true;
         try {
             await agent.Profiles.follow(username);
             runInAction(() => {
@@ -130,7 +155,8 @@ export default class ProfileStore {
         }
     }
 
-    @action unfollow = async (username: string) => {
+    @action
+    unfollow = async (username: string) => {
         this.photoLoading = true;
         try {
             await agent.Profiles.unfollow(username);
@@ -147,4 +173,23 @@ export default class ProfileStore {
             });
         }
     }
+
+    @action loadFollowings = async (predicate: string) => {
+            this.photoLoading = true;
+            try {
+                const profiles = await agent.Profiles.listFollowings(
+                    this.profile!.userName,
+                    predicate
+                );
+                runInAction(() => {
+                    this.followings = profiles;
+                    this.photoLoading = false;
+                });
+            } catch (error) {
+                console.log('Problem loading followings');
+                runInAction(() => {
+                    this.photoLoading = false;
+                });
+            }
+        }
 }
