@@ -17,6 +17,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure.Security;
 using API.Middleware;
 using API.SignalR;
+using Application.Profiles;
 using AutoMapper;
 using Persistence;
 using MediatR;
@@ -110,6 +111,7 @@ namespace API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.AddScoped<IProfileReader, ProfileReader>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
         }
 

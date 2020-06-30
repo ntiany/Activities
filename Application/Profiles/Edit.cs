@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interface;
-using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Profile
+namespace Application.Profiles
 {
     public class Edit
     {

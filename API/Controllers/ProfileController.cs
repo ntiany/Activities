@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Application.Profile;
+using Application.Profiles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
