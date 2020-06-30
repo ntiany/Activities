@@ -111,4 +111,40 @@ export default class ProfileStore {
             console.log(error);
         }
     }
+
+    @action follow = async (username: string) => {
+        this.photoLoading = true; 
+        try {
+            await agent.Profiles.follow(username);
+            runInAction(() => {
+                this.profile!.following = true;
+                this.profile!.followersCount++;
+                this.photoLoading = false;
+            });
+
+        } catch (error) {
+            console.log("Problem following user");
+            runInAction(() => {
+                this.photoLoading = false;
+            });
+        }
+    }
+
+    @action unfollow = async (username: string) => {
+        this.photoLoading = true;
+        try {
+            await agent.Profiles.unfollow(username);
+            runInAction(() => {
+                this.profile!.following = false;
+                this.profile!.followersCount--;
+                this.photoLoading = false;
+            });
+
+        } catch (error) {
+            console.log("Problem unfollowing user");
+            runInAction(() => {
+                this.photoLoading = false;
+            });
+        }
+    }
 }
