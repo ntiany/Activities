@@ -1,11 +1,16 @@
-﻿export interface IActivity  {
+﻿export interface IActivitiesEnvelope {
+    activities: IActivity[];
+    activityCount: number;
+}
+
+export interface IActivity {
     id: string;
     title: string;
     description: string;
     category: string;
     date: Date;
     city: string;
-    venue: string; 
+    venue: string;
     isGoing: boolean;
     isHost: boolean;
     attendees: IAttendee[];
@@ -18,11 +23,11 @@ export interface IComment {
     body: string;
     username: string;
     displayName: string;
-    image: string; 
+    image: string;
 }
 
 export interface IActivityFormValues extends Partial<IActivity> {
-    time?: Date
+    time?: Date;
 }
 
 export class ActivityFormValues implements IActivityFormValues {
@@ -31,9 +36,9 @@ export class ActivityFormValues implements IActivityFormValues {
     category: string = '';
     description: string = '';
     date?: Date = undefined;
+    time?: Date = undefined;
     city: string = '';
     venue: string = '';
-    time?: Date = undefined;
 
     constructor(init?: IActivityFormValues) {
         if (init && init.date) {
