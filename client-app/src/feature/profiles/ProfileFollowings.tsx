@@ -8,12 +8,12 @@ const ProfileFollowings = () => {
     const {
         profile,
         followings,
-        photoLoading,
+        loading,
         activeTab
     } = rootStore.profileStore;
 
     return (
-        <Tab.Pane loading={photoLoading}>
+        <Tab.Pane loading={loading}>
             <Grid>
                 <Grid.Column width={16}>
                     <Header
