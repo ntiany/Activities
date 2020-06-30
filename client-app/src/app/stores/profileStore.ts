@@ -123,7 +123,7 @@ export default class ProfileStore {
             });
 
         } catch (error) {
-            console.log("Problem following user");
+            console.log("Problem following user", error);
             runInAction(() => {
                 this.photoLoading = false;
             });
