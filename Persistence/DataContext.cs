@@ -21,6 +21,8 @@ namespace Persistence
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<UserFollowing> Followings { get; set; } 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
