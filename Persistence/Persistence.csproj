@@ -3,6 +3,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200608115819_SeedValues.cs" />
     <Compile Remove="Migrations\20200608115819_SeedValues.Designer.cs" />
+    <Compile Remove="Migrations\20200630064847_AddedFollowerAndFollowing.cs" />
+    <Compile Remove="Migrations\20200630064847_AddedFollowerAndFollowing.Designer.cs" />
+    <Compile Remove="Migrations\20200630092335_CorrectName.cs" />
+    <Compile Remove="Migrations\20200630092335_CorrectName.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

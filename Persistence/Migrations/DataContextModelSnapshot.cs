@@ -196,7 +196,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("UserFollowing");
+                    b.ToTable("Followings");
                 });
 
             modelBuilder.Entity("Domain.Value", b =>

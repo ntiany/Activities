@@ -18,7 +18,7 @@ export interface IComment {
     body: string;
     username: string;
     displayName: string;
-    image: string;
+    image: string; 
 }
 
 export interface IActivityFormValues extends Partial<IActivity> {
@@ -48,4 +48,5 @@ export interface IAttendee {
     displayName: string;
     image: string;
     isHost: boolean;
+    following?: boolean;
 }

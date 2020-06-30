@@ -2,12 +2,12 @@
 
 namespace Persistence.Migrations
 {
-    public partial class AddedFollowerAndFollowing : Migration
+    public partial class AddFollowings : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserFollowing",
+                name: "Followings",
                 columns: table => new
                 {
                     ObserverId = table.Column<string>(nullable: false),
@@ -15,15 +15,15 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFollowing", x => new { x.ObserverId, x.TargetId });
+                    table.PrimaryKey("PK_Followings", x => new { x.ObserverId, x.TargetId });
                     table.ForeignKey(
-                        name: "FK_UserFollowing_AspNetUsers_ObserverId",
+                        name: "FK_Followings_AspNetUsers_ObserverId",
                         column: x => x.ObserverId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserFollowing_AspNetUsers_TargetId",
+                        name: "FK_Followings_AspNetUsers_TargetId",
                         column: x => x.TargetId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -31,15 +31,15 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFollowing_TargetId",
-                table: "UserFollowing",
+                name: "IX_Followings_TargetId",
+                table: "Followings",
                 column: "TargetId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserFollowing");
+                name: "Followings");
         }
     }
 }

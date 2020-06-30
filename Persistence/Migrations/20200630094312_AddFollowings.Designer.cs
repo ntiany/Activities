@@ -9,8 +9,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200630064847_AddedFollowerAndFollowing")]
-    partial class AddedFollowerAndFollowing
+    [Migration("20200630094312_AddFollowings")]
+    partial class AddFollowings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,7 +198,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("UserFollowing");
+                    b.ToTable("Followings");
                 });
 
             modelBuilder.Entity("Domain.Value", b =>
