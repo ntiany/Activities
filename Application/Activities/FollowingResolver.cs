@@ -22,8 +22,10 @@ namespace Application.Activities
 
         public bool Resolve(UserActivity source, AttendeeDto destination, bool destMember, ResolutionContext context)
         {
+            var username = _userAccessor.GetCurrentUsername();
+
             var currentUser =
-                _dataContext.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername()).Result;
+                _dataContext.Users.SingleOrDefaultAsync(x => x.UserName == username).Result;
 
             if (currentUser.Followings.Any(x => x.TargetId == source.AppUserId))
                 return true;
